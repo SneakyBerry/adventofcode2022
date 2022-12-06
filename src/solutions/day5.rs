@@ -1,4 +1,9 @@
-pub fn parse_input(input: &str) -> (Vec<Vec<char>>, Vec<(usize, usize, usize)>) {
+use crate::aoc_tests;
+
+type Crates = Vec<Vec<char>>;
+type Instructions = Vec<(usize, usize, usize)>;
+
+pub fn parse_input(input: &str) -> (Crates, Instructions) {
     let input = input.replace("\r\n", "\n");
     let input = input.split("\n\n").collect::<Vec<_>>();
     let crates = input[0].lines().collect::<Vec<_>>();
@@ -10,13 +15,13 @@ pub fn parse_input(input: &str) -> (Vec<Vec<char>>, Vec<(usize, usize, usize)>) 
         .unwrap();
     let rows_count = crates.len();
     let mut state = vec![vec![]; columns_count];
-    for j in 0..columns_count {
+    for (j, col) in state.iter_mut().enumerate().take(columns_count) {
         for row in crates[..rows_count - 1].iter() {
             let char = row.get(j * 4..j * 4 + 3).unwrap_or("").trim();
             if char.is_empty() {
                 continue;
             } else {
-                state[j].push(char.chars().nth(1).expect("It can't be None"));
+                col.push(char.chars().nth(1).expect("It can't be None"));
             }
         }
     }
@@ -61,3 +66,18 @@ pub fn solve2(input: &str) -> String {
     }
     state.iter_mut().filter_map(|col| col.first()).collect()
 }
+
+aoc_tests!(
+    name: day5_test1;
+    input: "    [D]
+[N] [C]
+[Z] [M] [P]
+ 1   2   3
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2";
+    task1: "CMZ";
+    task2: "MCD";
+);

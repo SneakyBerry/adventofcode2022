@@ -1,4 +1,5 @@
 use std::cmp::Ordering;
+use crate::aoc_tests;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Figure {
@@ -91,3 +92,12 @@ pub fn solve2(input: &str) -> usize {
         score
     })
 }
+
+aoc_tests!(
+    name: day2_test1;
+    input: "A Y
+B X
+C Z";
+    task1: 15;
+    task2: 12;
+);

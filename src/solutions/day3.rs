@@ -1,10 +1,11 @@
+use crate::aoc_tests;
 use std::ops::BitOr;
 
 fn get_priority(x: char) -> usize {
     let x = x as u8;
-    if b'a' <= x && x <= b'z' {
+    if (b'a'..=b'z').contains(&x) {
         1 << (x - 96)
-    } else if b'A' <= x && x <= b'Z' {
+    } else if(b'A'..=b'Z').contains(&x) {
         1 << (x - 38)
     } else {
         panic!("Invalid input: {:?}", x as char)
@@ -54,3 +55,15 @@ pub fn solve2(input: &str) -> usize {
             priorities
         })
 }
+
+aoc_tests!(
+    name: day3_test1;
+    input: "vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw";
+    task1: 157;
+    task2: 70;
+);
